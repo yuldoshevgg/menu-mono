@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package general;
+option go_package = "gitlab.com/media_park/bnpl-mono-repo/generated/general";
+import "google/protobuf/struct.proto";
+
+message ErrorInfo {
+    message Label {
+        string uz = 1;
+        string ru = 2;
+        string en = 3;
+    }
+    string message              = 1;
+    string report_id            = 2 [json_name = "report_id"];
+    int32 bnpl_code             = 3 [json_name = "bnpl_code"];
+    Label label                 = 4;
+    google.protobuf.Struct data = 5;
+}
+message Id {
+    string id = 1;
+}
+
+message AlifEventResponse {
+    string ws_path       = 1 [json_name = "ws_path"];
+    string message       = 2 [json_name = "message"];
+    string client_status = 3 [json_name = "client_status"];
+    string customer_id   = 4 [json_name = "customer_id"];
+}
+
+message ImanEventResponse {
+    string ws_path = 1 [json_name = "ws_path"];
+}
+
+message BrokerEventResponse {
+    AlifEventResponse alif = 1 [json_name = "alif"];
+    ImanEventResponse iman = 2 [json_name = "iman"];
+}
+
+message CreatedEventResponse {
+    string ws_path         = 1 [json_name = "ws_path"];
+    string task_id         = 2 [json_name = "task_id"];
+    bool is_card_confirmed = 3 [json_name = "is_card_confirmed"];
+}

@@ -27,3 +27,15 @@ migrate_status:
 
 sqlc:
 	sqlc generate
+
+proto:
+	rm -f generated/**/*.go
+	rm -f doc/swagger/*.swagger.json
+	mkdir -p generated
+	protoc \
+		--proto_path=protos --go_out=generated --go_opt=paths=source_relative \
+		--go-grpc_out=generated --go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=generated --grpc-gateway_opt=paths=source_relative,allow_delete_body=true \
+		--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=swagger_docs,use_allof_for_refs=true,disable_service_tags=false,allow_delete_body=true \
+		--validate_out="lang=go,paths=source_relative:generated" \
+	protos/**/*.proto

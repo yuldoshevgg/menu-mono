@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package general;
+option go_package = "gitlab.com/media_park/bnpl-mono-repo/generated/general";
+import "google/api/visibility.proto";
+
+message GetAllRequest {
+    string search             = 1;
+    string vendor_id          = 2 [(google.api.field_visibility).restriction = "INTERNAL", json_name = "vendor_id"];
+    SearchFields search_field = 3 [json_name = "search_field"];
+    int32 limit               = 4;
+    int32 offset              = 5;
+    string status             = 6;
+    string customer_id        = 7 [json_name = "customer_id"];
+}
+
+enum SearchFields {
+    phone_number = 0;
+    pinfl        = 1;
+    first_name   = 2;
+    pass_data    = 3;
+}
+
+message GetByID {
+    string id = 1;
+}
+
+message GetByUserID {
+    string user_id = 1 [(google.api.field_visibility).restriction = "INTERNAL"];
+}
+
+message TaskID {
+    string task_id = 1 [json_name = "task_id"];
+}
+
+message WsPath {
+    string ws_path = 1 [json_name = "ws_path"];
+    string task_id = 2 [json_name = "task_id"];
+}

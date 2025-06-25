@@ -9,21 +9,8 @@ import (
 	zero "gopkg.in/guregu/null.v4/zero"
 )
 
-type Restaurant struct {
-	ID          int64              `json:"id"`
-	Uuid        zero.String        `json:"uuid"`
-	Title       string             `json:"title"`
-	Slug        string             `json:"slug"`
-	LogoUrl     zero.String        `json:"logo_url"`
-	Status      bool               `json:"status"`
-	Description zero.String        `json:"description"`
-	CreatedAt   pgtype.Timestamptz `json:"created_at"`
-	DeletedAt   pgtype.Timestamptz `json:"deleted_at"`
-}
-
 type Role struct {
-	ID          int64              `json:"id"`
-	Uuid        zero.String        `json:"uuid"`
+	ID          string             `json:"id"`
 	Title       string             `json:"title"`
 	Description zero.String        `json:"description"`
 	CreatedAt   pgtype.Timestamptz `json:"created_at"`
@@ -31,13 +18,27 @@ type Role struct {
 }
 
 type User struct {
-	ID           int64              `json:"id"`
-	Uuid         zero.String        `json:"uuid"`
-	Username     string             `json:"username"`
-	Password     string             `json:"password"`
-	RoleID       int32              `json:"role_id"`
-	RestaurantID int32              `json:"restaurant_id"`
-	FullName     string             `json:"full_name"`
-	CreatedAt    pgtype.Timestamptz `json:"created_at"`
-	DeletedAt    pgtype.Timestamptz `json:"deleted_at"`
+	ID          string             `json:"id"`
+	Username    string             `json:"username"`
+	Password    string             `json:"password"`
+	RoleID      string             `json:"role_id"`
+	VenueID     string             `json:"venue_id"`
+	FirstName   string             `json:"first_name"`
+	LastName    string             `json:"last_name"`
+	PhoneNumber string             `json:"phone_number"`
+	MiddleName  zero.String        `json:"middle_name"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
+	DeletedAt   pgtype.Timestamptz `json:"deleted_at"`
+}
+
+type Venue struct {
+	ID          string             `json:"id"`
+	Title       string             `json:"title"`
+	Slug        string             `json:"slug"`
+	VenueID     zero.String        `json:"venue_id"`
+	LogoUrl     zero.String        `json:"logo_url"`
+	Status      bool               `json:"status"`
+	Description zero.String        `json:"description"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
+	DeletedAt   pgtype.Timestamptz `json:"deleted_at"`
 }

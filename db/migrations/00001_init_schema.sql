@@ -1,41 +1,44 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE "roles" (
-  "id" bigserial PRIMARY KEY,
-  "uuid" uuid DEFAULT (gen_random_uuid()),
+  "id" uuid PRIMARY KEY DEFAULT (gen_random_uuid()),
   "title" varchar NOT NULL,
   "description" text,
-  "created_at" timestamptz DEFAULT (now()),
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
   "deleted_at" timestamptz
 );
 
-CREATE TABLE "restaurants" (
-  "id" bigserial PRIMARY KEY,
-  "uuid" uuid DEFAULT (gen_random_uuid()),
+CREATE TABLE "venues" (
+  "id" uuid PRIMARY KEY DEFAULT (gen_random_uuid()),
   "title" varchar NOT NULL,
   "slug" varchar NOT NULL,
+  "venue_id" uuid,
   "logo_url" varchar,
-  "status" BOOLEAN NOT NULL DEFAULT false,
+  "status" boolean NOT NULL DEFAULT false,
   "description" text,
-  "created_at" timestamptz DEFAULT (now()),
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
   "deleted_at" timestamptz
 );
 
 CREATE TABLE "users" (
-  "id" bigserial PRIMARY KEY,
-  "uuid" uuid DEFAULT (gen_random_uuid()),
+  "id" uuid PRIMARY KEY DEFAULT (gen_random_uuid()),
   "username" varchar NOT NULL,
   "password" varchar NOT NULL,
-  "role_id" INT NOT NULL,
-  "restaurant_id" INT NOT NULL,
-  "full_name" varchar NOT NULL,
-  "created_at" timestamptz DEFAULT (now()),
+  "role_id" uuid NOT NULL,
+  "venue_id" uuid NOT NULL,
+  "first_name" varchar NOT NULL,
+  "last_name" varchar NOT NULL,
+  "phone_number" varchar NOT NULL,
+  "middle_name" varchar,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
   "deleted_at" timestamptz
 );
 
 ALTER TABLE "users" ADD FOREIGN KEY ("role_id") REFERENCES "roles" ("id");
 
-ALTER TABLE "users" ADD FOREIGN KEY ("restaurant_id") REFERENCES "restaurants" ("id");
+ALTER TABLE "users" ADD FOREIGN KEY ("venue_id") REFERENCES "venues" ("id");
+
+ALTER TABLE "venues" ADD FOREIGN KEY ("venue_id") REFERENCES "venues" ("id");
 
 -- +goose StatementEnd
 
@@ -44,7 +47,7 @@ ALTER TABLE "users" ADD FOREIGN KEY ("restaurant_id") REFERENCES "restaurants" (
 
 DROP TABLE IF EXISTS "roles" CASCADE;
 
-DROP TABLE IF EXISTS "restaurants" CASCADE;
+DROP TABLE IF EXISTS "venues" CASCADE;
 
 DROP TABLE IF EXISTS "users" CASCADE;
 

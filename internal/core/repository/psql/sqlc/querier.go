@@ -9,7 +9,24 @@ import (
 )
 
 type Querier interface {
+	CountRoles(ctx context.Context) (int64, error)
+	CountUsers(ctx context.Context) (int64, error)
+	CountVenues(ctx context.Context) (int64, error)
+	CreateRole(ctx context.Context, arg CreateRoleParams) error
 	CreateUser(ctx context.Context, arg CreateUserParams) error
+	CreateVenue(ctx context.Context, arg CreateVenueParams) error
+	DeleteRole(ctx context.Context, id string) error
+	DeleteUser(ctx context.Context, id string) error
+	DeleteVenue(ctx context.Context, id string) error
+	GetRole(ctx context.Context, id string) (Role, error)
+	GetUser(ctx context.Context, id string) (User, error)
+	GetVenue(ctx context.Context, id string) (Venue, error)
+	ListRoles(ctx context.Context, arg ListRolesParams) ([]Role, error)
+	ListUsers(ctx context.Context, arg ListUsersParams) ([]User, error)
+	ListVenues(ctx context.Context, arg ListVenuesParams) ([]Venue, error)
+	UpdateRole(ctx context.Context, arg UpdateRoleParams) error
+	UpdateUser(ctx context.Context, arg UpdateUserParams) error
+	UpdateVenue(ctx context.Context, arg UpdateVenueParams) error
 }
 
 var _ Querier = (*Queries)(nil)

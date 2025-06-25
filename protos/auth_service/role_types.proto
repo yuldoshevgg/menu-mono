@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package auth_service;
+option go_package = "gitlab.com/media_park/bnpl-mono-repo/generated/auth_service";
+import "validate/validate.proto";
+
+message CreateRoleRequest {
+    string title       = 1 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string description = 2 [(validate.rules).string = { max_len: 500 }];
+}
+
+message GetRoleRequest {
+    string id = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+}
+
+message GetRoleResponse {
+    string id          = 1;
+    string title       = 2;
+    string description = 3;
+    string created_at  = 4;
+}
+
+message UpdateRoleRequest {
+    string id          = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+    string title       = 2 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string description = 3 [(validate.rules).string = { max_len: 500 }];
+}
+
+message DeleteRoleRequest {
+    string id = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+}
+
+message ListRolesRequest {
+    int32 page  = 1;
+    int32 limit = 2;
+}
+
+message ListRolesResponse {
+    repeated GetRoleResponse roles = 1;
+    int32 total                    = 2;
+}

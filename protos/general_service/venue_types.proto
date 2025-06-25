@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package general_service;
+option go_package = "gitlab.com/media_park/bnpl-mono-repo/generated/general_service";
+import "validate/validate.proto";
+
+message CreateVenueRequest {
+    string title       = 1 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string description = 2 [(validate.rules).string = { max_len: 500 }];
+    string slug        = 3 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string venue_id    = 4 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string logo_url    = 5 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    bool status        = 6;
+}
+
+message GetVenueRequest {
+    string id = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+}
+
+message GetVenueResponse {
+    string id          = 1;
+    string title       = 2;
+    string description = 3;
+    string slug        = 4;
+    string venue_id    = 5;
+    string logo_url    = 6;
+    bool status        = 7;
+    string created_at  = 8;
+}
+
+message UpdateVenueRequest {
+    string id          = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+    string title       = 2 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string description = 3 [(validate.rules).string = { max_len: 500 }];
+    string slug        = 4 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string venue_id    = 5 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    string logo_url    = 6 [(validate.rules).string = { min_len: 1, max_len: 100 }];
+    bool status        = 7;
+}
+
+message DeleteVenueRequest {
+    string id = 1 [(validate.rules).string = { min_len: 1, max_len: 36 }];
+}
+
+message ListVenuesRequest {
+    int32 page  = 1;
+    int32 limit = 2;
+}
+
+message ListVenuesResponse {
+    repeated GetVenueResponse venues = 1;
+    int32 total                      = 2;
+}
