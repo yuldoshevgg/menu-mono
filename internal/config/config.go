@@ -43,8 +43,14 @@ type Config struct {
 		SwaggerEnabled      bool          `env:"PROJECT_SWAGGER_ENABLED"`
 		CacheTimeout        time.Duration `env:"PROJECT_CACHE_TIMEOUT"`
 	}
+
+	App struct {
+		BaseURL string `env:"APP_BASE_URL"`
+	}
+
 	Token struct {
 		AccessExpiresInTime  time.Duration `env:"TOKEN_ACCESS_EXPIRES_IN_TIME"`
+		TokenExpiresInTime   time.Duration `env:"TOKEN_EXPIRES_IN_TIME"`
 		RefreshExpiresInTime time.Duration `env:"TOKEN_REFRESH_EXPIRES_IN_TIME"`
 		SecretKey            string        `env:"TOKEN_SECRET_KEY"`
 	}

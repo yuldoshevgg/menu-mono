@@ -75,6 +75,10 @@ func (s *roleService) DeleteRole(ctx context.Context, req *auth_service.DeleteRo
 func (s *roleService) ListRoles(ctx context.Context, req *auth_service.ListRolesRequest) (*auth_service.ListRolesResponse, error) {
 	var resp []*auth_service.GetRoleResponse
 
+	if req.Limit == 0 {
+		req.Limit = 10
+	}
+
 	roles, err := s.repo.Postgres().ListRoles(ctx, sqlc.ListRolesParams{
 		Limit:  req.Limit,
 		Offset: req.Page,

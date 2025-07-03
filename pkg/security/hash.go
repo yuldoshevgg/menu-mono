@@ -47,7 +47,6 @@ func HashPassword(password string) (hashedPassword string, err error) {
 	return hashedPassword, nil
 }
 
-// ComparePassword is used to compare a user-inputted password to a hash to see if the password matches or not.
 func ComparePassword(hashedPassword, password string) (match bool, err error) {
 	parts := strings.Split(hashedPassword, "$")
 
@@ -75,7 +74,8 @@ func ComparePassword(hashedPassword, password string) (match bool, err error) {
 	}
 	keyLen := uint32(len(decodedHash))
 
-	comparisonHash := argon2.IDKey([]byte(password), salt, A2IDtime, A2IDmemory, A2IDthreads, keyLen)
+	// FIX: Use the extracted parameters instead of constants
+	comparisonHash := argon2.IDKey([]byte(password), salt, uint32(time), uint32(memory), uint8(threads), keyLen)
 
 	return (subtle.ConstantTimeCompare(decodedHash, comparisonHash) == 1), nil
 }

@@ -100,6 +100,10 @@ func (s *userService) DeleteUser(ctx context.Context, req *auth_service.DeleteUs
 }
 
 func (s *userService) ListUsers(ctx context.Context, req *auth_service.ListUsersRequest) (*auth_service.ListUsersResponse, error) {
+	if req.Limit == 0 {
+		req.Limit = 10
+	}
+
 	users, err := s.repo.Postgres().ListUsers(ctx, sqlc.ListUsersParams{
 		Limit:  req.Limit,
 		Offset: req.Page,

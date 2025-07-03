@@ -9,6 +9,36 @@ import (
 	zero "gopkg.in/guregu/null.v4/zero"
 )
 
+type Category struct {
+	ID        string             `json:"id"`
+	Name      string             `json:"name"`
+	VenueID   string             `json:"venue_id"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	DeletedAt pgtype.Timestamptz `json:"deleted_at"`
+}
+
+type MenuItem struct {
+	ID          string             `json:"id"`
+	Title       string             `json:"title"`
+	CategoryID  string             `json:"category_id"`
+	VenueID     string             `json:"venue_id"`
+	Price       pgtype.Numeric     `json:"price"`
+	ImageUrl    string             `json:"image_url"`
+	IsAvailable bool               `json:"is_available"`
+	Description zero.String        `json:"description"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
+	DeletedAt   pgtype.Timestamptz `json:"deleted_at"`
+}
+
+type QrLink struct {
+	ID          string             `json:"id"`
+	VenueID     string             `json:"venue_id"`
+	TableNumber int32              `json:"table_number"`
+	ExpiresAt   pgtype.Timestamptz `json:"expires_at"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
+	DeletedAt   pgtype.Timestamptz `json:"deleted_at"`
+}
+
 type Role struct {
 	ID          string             `json:"id"`
 	Title       string             `json:"title"`

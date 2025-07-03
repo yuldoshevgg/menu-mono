@@ -25,7 +25,12 @@ func NewVenueService(cfg *config.Config, repo repository.Store) *venueService {
 
 func (s *venueService) CreateVenue(ctx context.Context, req *general_service.CreateVenueRequest) (*emptypb.Empty, error) {
 	if err := s.repo.Postgres().CreateVenue(ctx, sqlc.CreateVenueParams{
-		Title: req.Title,
+		Title:       req.Title,
+		Slug:        req.Slug,
+		VenueID:     zero.StringFrom(req.VenueId),
+		LogoUrl:     zero.StringFrom(req.LogoUrl),
+		Status:      req.Status,
+		Description: zero.StringFrom(req.Description),
 	}); err != nil {
 		return nil, fmt.Errorf("failed to create venue: %w", err)
 	}
@@ -73,6 +78,10 @@ func (s *venueService) DeleteVenue(ctx context.Context, req *general_service.Del
 }
 
 func (s *venueService) ListVenues(ctx context.Context, req *general_service.ListVenuesRequest) (*general_service.ListVenuesResponse, error) {
+	if req.Limit == 0 {
+		req.Limit = 10
+	}
+
 	venues, err := s.repo.Postgres().ListVenues(ctx, sqlc.ListVenuesParams{
 		Limit:  req.Limit,
 		Offset: req.Page,

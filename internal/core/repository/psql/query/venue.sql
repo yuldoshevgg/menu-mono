@@ -22,3 +22,6 @@ SELECT * FROM venues WHERE deleted_at IS NULL ORDER BY created_at DESC LIMIT $1 
 
 -- name: CountVenues :one
 SELECT COUNT(*) FROM venues WHERE deleted_at IS NULL;
+
+-- name: ExistVenue :one
+SELECT EXISTS(SELECT 1 FROM venues WHERE id = $1 AND deleted_at IS NULL);

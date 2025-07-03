@@ -39,3 +39,6 @@ proto:
 		--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=swagger_docs,use_allof_for_refs=true,disable_service_tags=false,allow_delete_body=true \
 		--validate_out="lang=go,paths=source_relative:generated" \
 	protos/**/*.proto
+
+test:
+	go test -v -cover -short ./...

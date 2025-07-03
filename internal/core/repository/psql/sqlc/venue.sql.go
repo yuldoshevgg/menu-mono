@@ -56,6 +56,17 @@ func (q *Queries) DeleteVenue(ctx context.Context, id string) error {
 	return err
 }
 
+const existVenue = `-- name: ExistVenue :one
+SELECT EXISTS(SELECT 1 FROM venues WHERE id = $1 AND deleted_at IS NULL)
+`
+
+func (q *Queries) ExistVenue(ctx context.Context, id string) (bool, error) {
+	row := q.db.QueryRow(ctx, existVenue, id)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
 const getVenue = `-- name: GetVenue :one
 SELECT id, title, slug, venue_id, logo_url, status, description, created_at, deleted_at FROM venues WHERE id = $1 LIMIT 1 AND deleted_at IS NULL
 `

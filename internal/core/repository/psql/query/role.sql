@@ -1,5 +1,14 @@
 -- name: CreateRole :exec
-INSERT INTO roles (title, description) VALUES ($1, $2);
+INSERT INTO roles 
+    (title, description) 
+VALUES 
+    (
+        sqlc.arg('title'),
+        sqlc.arg('description')
+    )
+ON CONFLICT (title) DO UPDATE SET 
+    description = sqlc.arg('description')
+;
 
 -- name: GetRole :one
 SELECT * FROM roles WHERE id = $1 LIMIT 1 AND deleted_at IS NULL;

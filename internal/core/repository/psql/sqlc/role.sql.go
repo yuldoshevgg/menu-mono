@@ -23,7 +23,15 @@ func (q *Queries) CountRoles(ctx context.Context) (int64, error) {
 }
 
 const createRole = `-- name: CreateRole :exec
-INSERT INTO roles (title, description) VALUES ($1, $2)
+INSERT INTO roles 
+    (title, description) 
+VALUES 
+    (
+        $1,
+        $2
+    )
+ON CONFLICT (title) DO UPDATE SET 
+    description = $2
 `
 
 type CreateRoleParams struct {
